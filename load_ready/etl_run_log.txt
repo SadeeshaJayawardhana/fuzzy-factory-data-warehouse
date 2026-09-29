@@ -1,0 +1,17 @@
+[EXTRACT] Reading CSV source (transactional core)...
+[EXTRACT] Reading Excel source (product catalog)...
+[EXTRACT] Reading JSON source (web analytics)...
+[EXTRACT] orders=6865, order_items=9026, refunds=325, products=4, sessions=99161, pageviews=247569
+[TRANSFORM] Filled 56529 null UTM values with 'direct' (untracked traffic)
+[TRANSFORM] orders: removed 0 duplicates
+[TRANSFORM] order_items: removed 0 duplicates
+[TRANSFORM] sessions: removed 0 duplicates
+[TRANSFORM] products: removed 0 duplicates
+[LOAD] Dim_Date built: 181 rows (2014-01-01 to 2014-06-30)
+[LOAD] Dim_Product built: 4 rows
+[LOAD] Dim_Channel built: 12 unique channel combinations
+[LOAD] Fact_Order_Items built: 9026 rows
+[VALIDATE] Fact_Order_Items unmatched FK rows: 0 (should be 0)
+[LOAD] Fact_Sessions built: 99161 rows
+[VALIDATE] Overall session-to-order conversion rate: 6.92%
+[LOAD] All staging and warehouse CSVs written successfully.
