@@ -1,0 +1,22 @@
+# Ignore all JSON files in the project
+*.json
+
+# Ignore all JSON files inside specific directories (e.g., sources/ or raw_data/)
+sources/*.json
+raw_data/*.json
+
+# Keep specific JSON files if needed (e.g., configuration files)
+!package.json
+!tsconfig.json
+!settings.json
+
+# Environment and virtual environments
+venv/
+.venv/
+env/
+__pycache__/
+.env
+
+# IDE settings
+.vscode/
+.idea/
