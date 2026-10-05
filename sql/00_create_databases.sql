@@ -1,0 +1,4 @@
+CREATE DATABASE ToyStore_StagingDB;
+GO
+CREATE DATABASE ToyStore_WarehouseDB;
+GO

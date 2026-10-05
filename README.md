@@ -12,19 +12,18 @@ The business question behind it is simple. The store wants to know which marketi
 
 The data is the Maven Fuzzy Factory dataset from Maven Analytics, also available on Kaggle. It covers about three years, from March 2012 to March 2015, and includes close to half a million website sessions and over a million page views.
 
-We split the original six CSV files into three source formats to match the assignment's requirement for multiple data source types.
+The source preparation step keeps the operational and product data in CSV format and writes the web analytics data as JSON.
 
-| Format | Files                                   | Represents                          |
-| ------ | --------------------------------------- | ----------------------------------- |
-| CSV    | orders, order_items, order_item_refunds | the store's order processing system |
-| Excel  | products                                | a small product catalog             |
-| JSON   | website_sessions, website_pageviews     | web analytics tracking data         |
+| Format | Files                                             | Represents                                              |
+| ------ | ------------------------------------------------- | ------------------------------------------------------- |
+| CSV    | orders, order_items, order_item_refunds, products | the store's order processing system and product catalog |
+| JSON   | website_sessions, website_pageviews               | web analytics tracking data                             |
 
 ## How the pipeline works
 
 Everything from the staging tables onward is done in T-SQL.
 
-1. `etl/prepare_sources.py` reads the original CSVs and writes them back out as CSV, Excel and JSON. This is just a file format change, nothing in here touches SQL Server or does any cleaning that matters for grading.
+1. `source_preparation/prepare_sources.py` reads the original CSVs and writes the transactional and product data as CSV and web analytics data as JSON. The product catalog is copied unchanged. This step does not touch SQL Server or perform data cleaning.
 2. `sql/01_create_staging_tables.sql` creates six staging tables that mirror the source files.
 3. `sql/01b_load_staging_from_files.sql` loads those tables straight from the files. The CSVs go in with BULK INSERT. The JSON files go in with OPENROWSET and OPENJSON, since SQL Server has no separate JSON import tool. The four product rows are entered directly.
 4. `sql/02_create_warehouse_tables.sql` creates the star schema: three dimension tables and two fact tables.
@@ -37,8 +36,8 @@ Everything from the staging tables onward is done in T-SQL.
 ```
 dashboards/   PowerBI dashboards
 raw_data/     the six original Maven CSVs
-sources/      the reshaped CSV, Excel and JSON source files
-etl/          prepare_sources.py
+sources/      the prepared CSV and JSON source files
+source_preparation/  prepare_sources.py
 sql/          all the SQL scripts, run in the order above
 report/       the assignment report and diagrams
 ```
